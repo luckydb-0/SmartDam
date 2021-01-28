@@ -2,6 +2,7 @@
 
 LedTask::LedTask(int pin) {
 	this->pin = pin;
+  Task::setId(TASK_LED);
 }
 
 void LedTask::init(int period) {

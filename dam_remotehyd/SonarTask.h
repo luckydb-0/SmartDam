@@ -8,11 +8,13 @@ public:
   SonarTask(int pinTrig, int pinEcho);
   void init(int period);
   void tick();
+  float getLastRead();
 
 private:
   int pinEcho;
   int pinTrig;
   Sonar* sonar;
+  float lastRead;
 };
 
 #endif

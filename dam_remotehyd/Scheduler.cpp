@@ -7,11 +7,9 @@ volatile bool timerFlag;
 
 void timerHandler(void){
   timerFlag = true;
-  Serial.println("Eccomi");
 }
 
 void Scheduler::init(float period){
-  Serial.begin(9600);
   this->period = period;
   timerFlag = false;
   blinker.attach(period, timerHandler);
@@ -29,7 +27,7 @@ bool Scheduler::addTask(Task* task){
 }
   
 void Scheduler::schedule(){   
-  while (!timerFlag){}
+  while (!timerFlag){ yield(); }
   timerFlag = false;
 
   for (int i = 0; i < nTasks; i++){

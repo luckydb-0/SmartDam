@@ -3,11 +3,19 @@
 
 #include "StateEnum.h"
 
+enum TaskId{TASK_LED, TASK_SONAR, TASK_STATE};
+
 class Task {
   int myPeriod;
   int timeElapsed;
   bool active;
   damState state;
+  TaskId id;
+
+protected:
+  void setId(TaskId id){
+    this->id = id;
+  }
   
 public:
   virtual void init(int period){
@@ -16,6 +24,10 @@ public:
   }
 
   virtual void tick() = 0;
+
+  TaskId getTaskId(){
+    return this->id;
+  }
 
   bool updateAndCheckTime(int basePeriod){
     timeElapsed += basePeriod;
@@ -37,6 +49,10 @@ public:
 
   void updateState(damState state){
     this->state = state;
+  }
+
+  damState getState(){
+    return this->state;
   }
 
 };
