@@ -1,5 +1,6 @@
 #ifndef __STATETASK__
 #define __STATETASK__
+
 #include "State.h"
 #include "Task.h"
 #include "SonarTask.h"
@@ -11,13 +12,12 @@
 class StateTask: public Task {
 
 public:
-  //StateTask(Task** tasks, int len);
-  StateTask(Task* sonar);
+  StateTask(Task** tasks, int len);
   void init(int period);
   void tick();
   
 private:
-  State* state;
+  State* st;
   damState lastState;
   SonarTask* sonar;
   Task** components;

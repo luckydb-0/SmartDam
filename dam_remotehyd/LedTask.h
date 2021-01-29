@@ -11,6 +11,7 @@ class LedTask: public Task {
 	
 public:
 	LedTask(int pin);
+  State* st;
 	void init(int period);
 	void tick();
 

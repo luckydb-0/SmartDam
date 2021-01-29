@@ -1,18 +1,19 @@
 #ifndef __DAMSTATE__
 #define __DAMSTATE__
-#include "Arduino.h"
-#include "Task.h"
+
 #include "StateEnum.h"
 
 class State {
 public:
   State();
-  damState getCurrentState();
-  void setState(damState state);
 
+  State(const damState ds);
+  
+  static void setState(const damState ds);
+  static const damState& getCurrentState();
+  
 private:
-  damState currentState;
-
+  static damState& currentState();
 };
 
 #endif

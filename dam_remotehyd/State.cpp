@@ -1,13 +1,26 @@
 #include "State.h"
-
+/*
 State::State(){
-  this->currentState = NORMAL;
-}
+  State::currentState = NORMAL;
+}*/
 
-damState State::getCurrentState(){
-  return this->currentState;
-}
+  State::State() {
+    setState(NORMAL);  
+  }
 
-void State::setState(damState state){
-  this->currentState = state;
-};
+  State::State(const damState ds){
+    setState(ds);
+  }
+  
+  void State::setState(const damState ds){
+    currentState() = ds;
+  }
+
+  const damState& State::getCurrentState(){
+    return currentState();
+  }
+  
+  damState& State::currentState(){
+    static damState ds = NORMAL;
+    return ds;
+  }

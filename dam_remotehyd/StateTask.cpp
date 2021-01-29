@@ -1,11 +1,12 @@
 #include "StateTask.h"
+#include "Arduino.h"
 
-StateTask::StateTask(Task* sonar){
-  this->state = new State();
-  this->lastState = this->state->getCurrentState();
-  //this->componentsCount = len;
-  //this->components = tasks;
-  this->sonar = (SonarTask*)sonar;
+StateTask::StateTask(Task** tasks, int len){
+  this->st = new State();
+  this->lastState = State::getCurrentState();
+  this->componentsCount = len;
+  this->components = tasks;
+  this->sonar = this->getSonarTask();
   Task::setId(TASK_STATE);
 }
 
@@ -15,14 +16,14 @@ void StateTask::init(int period){
 
 damState StateTask::checkState(float distance){
   if(distance < DIST_2){
-    this->state->setState(ALARM);
+    State::setState(ALARM);
   } else if (distance >= DIST_2 && distance < DIST_1) {
-    this->state->setState(PRE_ALARM);
+    State::setState(PRE_ALARM);
   } else {
-    this->state->setState(NORMAL);
+    State::setState(NORMAL);
   }
 
-  return this->state->getCurrentState();
+  return State::getCurrentState();
 }
 
 void StateTask::tick(){
@@ -30,7 +31,7 @@ void StateTask::tick(){
   damState curr;
   sonarRead = this->sonar->getLastRead();
   curr = this->checkState(sonarRead);
-
+    
   if(curr != this->lastState) {
     this->updateComponents();
     this->lastState = curr;
@@ -43,16 +44,21 @@ void StateTask::tick(){
 SonarTask* StateTask::getSonarTask(){
   for(int i = 0; i < this->componentsCount; i++){
     if(this->components[i]->getTaskId() == TASK_SONAR) {
-      Serial.println(String("Id trovato ") + i);
       return (SonarTask*)(this->components[i]);
     }
   }
 
-  return NULL;
+  //return NULL;
 }
 
 void StateTask::updateComponents() {
-  for(int i = 0; i < this->componentsCount; i++) {
-    this->components[i]->updateState(this->state->getCurrentState());
-  }
+ /* for(int i = 0; i < this->componentsCount; i++) {
+
+    this->components[i]; 
+
+    damState st = State::getCurrentState();    
+
+    //task->updateState(st);
+
+  }*/
 };

@@ -2,7 +2,6 @@
 #define __SONARIMPL__
 
 #include "Sonar.h"
-#include "State.h"
 
 class SonarImpl: public Sonar {
 	

@@ -23,13 +23,13 @@ void setup() {
   Task* taskArray[NUM_TASK];
   int counter = 0;
   Serial.begin(9600);
-  WiFi.begin(SSID_NAME, WIFI_PWD);
+  /*WiFi.begin(SSID_NAME, WIFI_PWD);
   while (WiFi.status() != WL_CONNECTED) {  
     delay(500);
     Serial.print(".");
   } 
   Serial.println("Connected: \n local IP: "+WiFi.localIP());
-
+  */
   sched.init(1/FREQ1);
 
   sonarTask = new SonarTask(PIN_TRIG, PIN_ECHO);
@@ -39,8 +39,8 @@ void setup() {
   taskArray[counter] = sonarTask;
   counter++;
 
-  //stateTask = new StateTask(taskArray, counter);
-  stateTask = new StateTask(sonarTask);
+  stateTask = new StateTask(taskArray, counter);
+  //stateTask = new StateTask(sonarTask);
   stateTask->init(1/FREQ1);
   stateTask->setActive(true);
   sched.addTask(stateTask);

@@ -2,14 +2,16 @@
 #define __TASK__
 
 #include "StateEnum.h"
+#include "Arduino.h"
 
 enum TaskId{TASK_LED, TASK_SONAR, TASK_STATE};
 
 class Task {
+
+private:
   int myPeriod;
   int timeElapsed;
   bool active;
-  damState state;
   TaskId id;
 
 protected:
@@ -19,8 +21,8 @@ protected:
   
 public:
   virtual void init(int period){
-    myPeriod = period;  
-    timeElapsed = 0;
+    this->myPeriod = period;  
+    this->timeElapsed = 0;
   }
 
   virtual void tick() = 0;
@@ -46,15 +48,6 @@ public:
   void setActive(bool active){
     this->active = active;
   }
-
-  void updateState(damState state){
-    this->state = state;
-  }
-
-  damState getState(){
-    return this->state;
-  }
-
 };
 
 #endif

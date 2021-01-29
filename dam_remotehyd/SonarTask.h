@@ -2,6 +2,7 @@
 #define __SONARTASK__
 #include "Task.h"
 #include "SonarImpl.h"
+#include "State.h"
 
 class SonarTask: public Task {
 public:
@@ -11,6 +12,7 @@ public:
   float getLastRead();
 
 private:
+  State* st;
   int pinEcho;
   int pinTrig;
   Sonar* sonar;
