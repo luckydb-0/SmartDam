@@ -1,9 +1,11 @@
 #include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
 
 #include "Scheduler.h"
 #include "SonarTask.h"
 #include "StateTask.h"
 #include "LedTask.h"
+#include "WifiData.h"
 
 #define PIN_TRIG D2
 #define PIN_ECHO D1
@@ -21,7 +23,12 @@ void setup() {
   Task* taskArray[NUM_TASK];
   int counter = 0;
   Serial.begin(9600);
-  Serial.println("CIAO");
+  WiFi.begin(SSID_NAME, WIFI_PWD);
+  while (WiFi.status() != WL_CONNECTED) {  
+    delay(500);
+    Serial.print(".");
+  } 
+  Serial.println("Connected: \n local IP: "+WiFi.localIP());
 
   sched.init(1/FREQ1);
 
