@@ -39,8 +39,14 @@ void setup() {
   taskArray[counter] = sonarTask;
   counter++;
 
+  ledTask = new LedTask(PIN_LED);
+  ledTask->init(1/FREQ1);
+  ledTask->setActive(true);
+  sched.addTask(ledTask);
+  taskArray[counter] = ledTask;
+  counter++;
+
   stateTask = new StateTask(taskArray, counter);
-  //stateTask = new StateTask(sonarTask);
   stateTask->init(1/FREQ1);
   stateTask->setActive(true);
   sched.addTask(stateTask);

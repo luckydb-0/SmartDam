@@ -11,6 +11,26 @@ void LedTask::init(int period) {
 }
 
 void LedTask::tick() {  
-	
+	switch(State::getCurrentState()){
+    case NORMAL:
+      if(led->isOn()){
+        led->switchOff();
+      }
+      break;
+    case PRE_ALARM:
+      if(led->isOn()){
+        led->switchOff();
+      } else {
+        led->switchOn();
+      }
+      break;
+    case ALARM:
+      if(!led->isOn()){
+        led->switchOn();
+      }
+      break;
+    default:
+      break;
+	}
 
 };
