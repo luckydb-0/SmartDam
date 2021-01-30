@@ -1,8 +1,8 @@
 #ifndef __WIFIDATA__
 #define __WIFIDATA__
 
-#define SSID_NAME "Tim Casa"
+#define SSID_NAME "TIM Casa"
 #define WIFI_PWD "patorosario.67"
-#define ADDRESS "http://4835983ac9af.ngrok.io"
+#define ADDRESS "http://3373e68a17c3.ngrok.io"
 
 #endif
