@@ -1,8 +1,9 @@
 #include "Scheduler.h"
+#include "Arduino.h"
 #include <ESP8266WiFi.h>
 #include <Ticker.h>  //Ticker Library
 
-Ticker blinker;
+Ticker timer;
 volatile bool timerFlag;
 
 void timerHandler(void){
@@ -12,7 +13,7 @@ void timerHandler(void){
 void Scheduler::init(float period){
   this->period = period;
   timerFlag = false;
-  blinker.attach(period, timerHandler);
+  timer.attach(period, timerHandler);
   nTasks = 0;
 }
 
@@ -25,11 +26,22 @@ bool Scheduler::addTask(Task* task){
     return false; 
   }
 }
-  
-void Scheduler::schedule(){   
+
+void Scheduler::updateTimer(){
+  if(State::isStateChanged()){
+    timer.detach();
+    if(State::getCurrentState() == ALARM){
+      timer.attach(1/FREQ2, timerHandler);
+    } else {
+      timer.attach(1/FREQ1, timerHandler);
+    }
+  }
+}
+ 
+void Scheduler::schedule(){
+  this->updateTimer();
   while (!timerFlag){ yield(); }
   timerFlag = false;
-
   for (int i = 0; i < nTasks; i++){
     if (taskList[i]->isActive() && taskList[i]->updateAndCheckTime(period)){
       taskList[i]->tick();

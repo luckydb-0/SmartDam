@@ -11,9 +11,6 @@
 #define PIN_ECHO D1
 #define PIN_LED D0
 
-#define FREQ1 1
-#define FREQ2 2
-
 Scheduler sched;
 Task* sonarTask;
 Task* ledTask;
@@ -53,7 +50,5 @@ void setup() {
 }
 
 void loop() {
-  
   sched.schedule();
-  
 }
