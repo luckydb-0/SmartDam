@@ -12,19 +12,14 @@
 class StateTask: public Task {
 
 public:
-  StateTask(Task** tasks, int len);
+  StateTask();
   void init(int period);
   void tick();
   
 private:
   State* st;
   damState lastState;
-  SonarTask* sonar;
-  Task** components;
-  int componentsCount;
-  SonarTask* getSonarTask();
   damState checkState(float distance);
-  void updateComponents();
   
 };
 

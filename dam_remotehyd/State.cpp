@@ -1,8 +1,4 @@
 #include "State.h"
-/*
-State::State(){
-  State::currentState = NORMAL;
-}*/
 
 State::State() {
   setState(NORMAL);
@@ -28,6 +24,19 @@ damState& State::currentState(){
   return ds;
 }
 
+float& State::sonarValue(){
+  static float num = 0.0;
+  return num;
+}
+
+void State::setValue(const float value){
+  sonarValue() = value;
+}
+
+const float& State::getValue(){
+  return sonarValue();
+}
+
 damState& State::prevState(){
   static damState prev = NORMAL;
   return prev;
@@ -48,4 +57,4 @@ bool State::isStateChanged(){
   } else {
     return false;
   }
-}
+};
