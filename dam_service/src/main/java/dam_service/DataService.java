@@ -1,16 +1,20 @@
 package dam_service;
 
-import java.util.Date;
-import java.util.LinkedList;
-
 import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Vertx;
+import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Map;
 
 /*
  * Data Service as a vertx event-loop 
@@ -48,7 +52,7 @@ public class DataService extends AbstractVerticle {
 			sendError(400, response);
 		} else {
 			float value = res.getFloat("value");
-			int state = res.getInteger("state");
+			int state = 	Integer.parseInt(res.getString("state"));
 			long time = System.currentTimeMillis();
 			
 			values.addFirst(new DataPoint(value, time, state));
@@ -56,7 +60,7 @@ public class DataService extends AbstractVerticle {
 				values.removeLast();
 			}
 			
-			log("New value: " + value + " in " + state + " state, on " + new Date(time));
+			log("New value: " + value + " from " + state + " on " + new Date(time));
 			response.setStatusCode(200).end();
 		}
 	}
