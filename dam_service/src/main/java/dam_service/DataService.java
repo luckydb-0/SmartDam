@@ -87,9 +87,7 @@ public class DataService extends AbstractVerticle {
 		System.out.println("[DATA SERVICE] "+msg);
 	}
 
-	public static void main(String[] args) {
-		Vertx vertx = Vertx.vertx();
-		DataService service = new DataService(8080);
-		vertx.deployVerticle(service);
-	}
+	//public static void main(String[] args) {
+		
+	//}
 }
