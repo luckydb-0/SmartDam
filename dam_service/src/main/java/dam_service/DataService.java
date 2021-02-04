@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import dam_service.Data;
 
 /*
  * Data Service as a vertx event-loop 
@@ -24,10 +26,14 @@ public class DataService extends AbstractVerticle {
 	private int port;
 	private static final int MAX_SIZE = 10;
 	private LinkedList<DataPoint> values;
+	private DataHandler dh;
+	private Object lock;
 	
-	public DataService(int port) {
-		values = new LinkedList<>();		
+	public DataService(int port, DataHandler dh, Object lock) {
+		this.values = new LinkedList<>();
+		this.dh = dh;
 		this.port = port;
+		this.lock = lock;
 	}
 
 	@Override
@@ -55,12 +61,13 @@ public class DataService extends AbstractVerticle {
 			int state = 	Integer.parseInt(res.getString("state"));
 			long time = System.currentTimeMillis();
 			
-			values.addFirst(new DataPoint(value, time, state));
-			if (values.size() > MAX_SIZE) {
-				values.removeLast();
+			this.values.addFirst(new DataPoint(value, time, state));
+			if (this.values.size() > MAX_SIZE) {
+				this.values.removeLast();
 			}
 			
 			log("New value: " + value + " from " + state + " on " + new Date(time));
+			this.dh.addAndHandleData(new Data(state, value, time));
 			response.setStatusCode(200).end();
 		}
 	}
