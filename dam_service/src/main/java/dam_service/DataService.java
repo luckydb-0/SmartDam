@@ -27,13 +27,11 @@ public class DataService extends AbstractVerticle {
 	private static final int MAX_SIZE = 10;
 	private LinkedList<DataPoint> values;
 	private DataHandler dh;
-	private Object lock;
 	
-	public DataService(int port, DataHandler dh, Object lock) {
+	public DataService(int port, DataHandler dh) {
 		this.values = new LinkedList<>();
 		this.dh = dh;
 		this.port = port;
-		this.lock = lock;
 	}
 
 	@Override
@@ -93,8 +91,4 @@ public class DataService extends AbstractVerticle {
 	private void log(String msg) {
 		System.out.println("[DATA SERVICE] "+msg);
 	}
-
-	//public static void main(String[] args) {
-		
-	//}
 }

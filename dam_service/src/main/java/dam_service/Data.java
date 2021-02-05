@@ -37,6 +37,6 @@ public class Data {
 	
 	@Override
 	public String toString() {
-		return this.state + ":" + Math.floor(this.value * 100) / 100  + ":" + this.timestamp;
+		return this.state + ":" + Math.floor(this.value * 1000) / 1000  + ":" + this.timestamp;
 	}
 }

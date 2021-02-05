@@ -2,6 +2,7 @@ package dam_service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DataHandler {
 	
@@ -21,7 +22,13 @@ public class DataHandler {
 	public void handleData() {
 		Data data = this.data.get(this.data.size() - 1);
 		this.messageHandler.sendMessage(data.toString());
-		System.out.println(data.toString());
+	}
+	
+	public void read() {
+		Optional<String> msg = this.messageHandler.receiveMessage();
+		if(msg.isPresent()) {
+			System.out.println(msg.get());
+		}
 	}
 	
 }
