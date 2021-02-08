@@ -2,21 +2,18 @@
 #define __TASK__
 
 #include "State.h"
-
-enum TaskId{LED, COMM, SERVO, MSG};
+#include "Globals.h"
 
 class Task {
   int myPeriod;
   int timeElapsed;
   bool active;
-  TaskId id;
   State* state;
   
 public:
-  virtual void init(int period, TaskId id, State* state){
+  virtual void init(int period, State* state){
     myPeriod = period;  
     timeElapsed = 0;
-    this->id = id;
     this->state = state;
   }
 
@@ -38,10 +35,6 @@ public:
 
   void setActive(bool active){
     this->active = active;
-  }
-
-  TaskId getId() {
-    return this->id;
   }
 
   State* getState(){

@@ -2,11 +2,7 @@
 #include "LedTask.h"
 #include "ServoMotorTask.h"
 #include "CommTask.h"
-
-#define FREQ_1 2000
-#define FREQ_2 1000
-#define SERVO_PIN 5
-#define LED_PIN 2
+#include "Globals.h"
 
 State* state;
 Task* ledTask;
@@ -20,20 +16,20 @@ void setup() {
 
   state = new State();
 
-  sched.init(100);
+  sched.init(500);
 
   commTask = new CommTask();
-  commTask->init(100, COMM, state);
+  commTask->init(1/FREQ_2, state);
   commTask->setActive(true);
   sched.addTask(commTask);
 
   ledTask = new LedTask(LED_PIN);
-  ledTask->init(100, LED, state);
+  ledTask->init(500, state);
   ledTask->setActive(true);
   sched.addTask(ledTask);
 
   servoTask = new ServoMotorTask(SERVO_PIN);
-  servoTask->init(100, SERVO, state);
+  servoTask->init(1/FREQ_2, state);
   servoTask->setActive(true);
   sched.addTask(servoTask);
 }

@@ -16,12 +16,14 @@ public:
   void setState(damState st);
   void setDistance(float distance);
   int getSpan();
+  bool isNewValueAvailable();
+  void setNewValueAvailable(bool b);
   
 private:
   damState currentState;
   int span;
   int computeSpan(float distance);
-  
+  bool valueAvailable;
 };
 
 #endif

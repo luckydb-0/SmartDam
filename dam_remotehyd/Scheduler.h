@@ -5,8 +5,8 @@
 #include "State.h"
 
 #define MAX_TASKS 5
-#define FREQ1 1.0
-#define FREQ2 3.0
+#define FREQ1 0.25
+#define FREQ2 0.5
 
 class Scheduler {
 

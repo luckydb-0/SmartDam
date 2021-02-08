@@ -1,16 +1,18 @@
 #include "CommTask.h"
-#include <string.h>
-#include <stdlib.h>     /* strtof */
 
+#define MAX_TIME 1.0/FREQ_1
+#define MAX_DISTANCE 4
 
 CommTask::CommTask() {}
 
 void CommTask::init(int period, State* state) {
-  Task::init(period, COMM, state);
+  Task::init(period, state);
 	MsgService.init();
+  this->timestamp = millis();
 }
 
-void CommTask::tick() {  
+void CommTask::tick() {
+  long now = millis();
 	if(MsgService.isMsgAvailable()) {
     String msg = MsgService.receiveMsg();
     char state = msg[0];
@@ -18,7 +20,6 @@ void CommTask::tick() {
 
     switch(state){
       case '0':
-        Serial.println("Ma come cazzo hai fatto?!?!");
         break;
       case '1':
         this->getState()->setState(PRE_ALARM);
@@ -31,5 +32,18 @@ void CommTask::tick() {
       default:
         break;
     }
+
+    this->getState()->setNewValueAvailable(true);
+    this->timestamp = millis();
+  } else if (now - timestamp >= MAX_TIME*1000) {
+    if(this->getState()->getCurrentState() != NORMAL){
+      this->getState()->setNewValueAvailable(true);
+      this->getState()->setState(NORMAL);
+      this->getState()->setDistance(MAX_DISTANCE); 
+    } else {
+      this->getState()->setNewValueAvailable(false);
+    }
+  } else {
+    this->getState()->setNewValueAvailable(false);
   }
 }

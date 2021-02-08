@@ -16,8 +16,15 @@ void State::setDistance(float distance){
   this->computeSpan(floor(distance*100+0.1)); // floor and +0.1 due to toFloat bug
 }
 
+bool State::isNewValueAvailable(){
+  return this->valueAvailable;
+}
+
+void State::setNewValueAvailable(bool b){
+  this->valueAvailable = b; 
+}
+
 int State::computeSpan(float distance){
-  
   if(distance <= (DIST_2 - 4*DELTA_D)){
     this->span = DELTA_SPAN*5;
   } else if(distance <= (DIST_2 - 3*DELTA_D)){
@@ -31,8 +38,6 @@ int State::computeSpan(float distance){
   } else {
     this->span = 0;
   }
-  Serial.println(String("Distance: ") + distance);
-  Serial.println(String("Span: ") + this->span);
 }
 
 int State::getSpan(){

@@ -17,25 +17,25 @@ Task* commTask;
 void setup() {
   Serial.begin(9600);
 
-  sched.init(1/FREQ1);
+  sched.init(1/FREQ2);
 
   sonarTask = new SonarTask(PIN_TRIG, PIN_ECHO);
-  sonarTask->init(1/FREQ1);
+  sonarTask->init(1/FREQ2);
   sonarTask->setActive(true);
   sched.addTask(sonarTask);
   
   ledTask = new LedTask(PIN_LED);
-  ledTask->init(1/FREQ1);
+  ledTask->init(1/FREQ2);
   ledTask->setActive(true);
   sched.addTask(ledTask);
   
   stateTask = new StateTask();
-  stateTask->init(1/FREQ1);
+  stateTask->init(1/FREQ2);
   stateTask->setActive(true);
   sched.addTask(stateTask);
 
   commTask = new CommTask();
-  commTask->init(1/FREQ1);
+  commTask->init(1/FREQ2);
   commTask->setActive(true);
   sched.addTask(commTask);
 }

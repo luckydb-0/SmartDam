@@ -7,12 +7,12 @@
 class CommTask: public Task {
 
 public:
-  	CommTask();
-    void init(int period, State* state);
-  	void tick();
+	CommTask();
+  void init(int period, State* state);
+	void tick();
 private:
   int period;
-  TaskId id;
+  long timestamp;
 };
 
 #endif
