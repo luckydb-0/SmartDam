@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Dam Mobile App</string>
+    <string name="connect_bluetooth">connetti bluetooth</string>
+    <string name="connection_state">Stato: non connesso</string>
+    <string name="dam_state_title">Stato del sistema</string>
+    <string name="dam_state">NORMALE</string>
+    <string name="bt_20">20</string>
+    <string name="choose_span_label">Seleziona apertura della diga</string>
+    <string name="manual_mode_switch">Entra in modalità manuale</string>
+    <string name="manual_label">Modalità manuale</string>
+    <string name="last_detection_title">Ultima rilevazione</string>
+    <string name="last_detection">1m</string>
+    <string name="bt_0">0</string>
+    <string name="bt_40">40</string>
+    <string name="bt_60">60</string>
+    <string name="bt_80">80</string>
+    <string name="bt_100">100</string>
+    <string name="dam_span_title">Apertura diga</string>
+    <string name="dam_span">40%</string>
 </resources>
