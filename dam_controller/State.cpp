@@ -2,6 +2,7 @@
 
 State::State(){
   this->currentState = NORMAL;
+  this->currentMode = AUTO;
 }
 
 damState State::getCurrentState(){
@@ -12,8 +13,20 @@ void State::setState(damState st){
   this->currentState = st;
 }
 
+mode State::getCurrentMode(){
+  return this->currentMode;
+}
+
+void State::setMode(mode m){
+  this->currentMode = m;
+}
+
 void State::setDistance(float distance){
   this->computeSpan(floor(distance*100+0.1)); // floor and +0.1 due to toFloat bug
+}
+
+void State::setSpan(int span) {
+  this->span = span;
 }
 
 bool State::isNewValueAvailable(){

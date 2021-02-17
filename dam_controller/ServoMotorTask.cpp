@@ -21,7 +21,6 @@ void ServoMotorTask::tick(){
   if(this->getState()->isNewValueAvailable()){
     int span = this->getState()->getSpan();
     this->servo->setPosition(this->getPulseFromSpan(span));
-    Serial.println(String("Pulse: ") + this->getPulseFromSpan(span));
   }
 }
 

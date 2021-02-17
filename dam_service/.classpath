@@ -32,7 +32,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
-	<classpathentry kind="lib" path="C:/Users/gianl/Desktop/Universit/SEIOT/seiot2021/java/lib/jssc-2.9.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/gianl/Desktop/Universit/SEIOT/seiot2021/java/lib/slf4j-simple-1.7.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andre/OneDrive/Desktop/Uni/iot/Progetto-03/SmartDam/dam_service/lib/jssc-2.9.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/andre/OneDrive/Desktop/Uni/iot/Progetto-03/SmartDam/dam_service/lib/slf4j-simple-1.7.9.jar"/>
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>

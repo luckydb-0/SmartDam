@@ -1,6 +1,5 @@
 package com.unibo.seiot.smartdam.dammobileapp;
 
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -37,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean manualMode = false;
     private int activeButton = 0;
     private List<Button> buttons;
+    private Switch sw;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
         if(btAdapter != null && !btAdapter.isEnabled()){
             startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), Utils.bluetooth.ENABLE_BT_REQUEST);
         }
-
         initUI();
     }
 
@@ -60,8 +59,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     connectToBTServer();
+                    Log.d(Utils.APP_LOG_TAG, "Try connect");
                 } catch (BluetoothDeviceNotFound bluetoothDeviceNotFound) {
+                    Log.d(Utils.APP_LOG_TAG, "Connect failed");
                     bluetoothDeviceNotFound.printStackTrace();
+
                 }
             }
         });
@@ -75,19 +77,21 @@ public class MainActivity extends AppCompatActivity {
             bt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(manualMode) {
-                        btChannel.sendMessage("Apertura " + bt.getText());
-                        bt.setEnabled(false);
-                        if (activeButton != 0) {
-                            findViewById(activeButton).setEnabled(true);
-                        }
-                        activeButton = id;
+                if(manualMode) {
+                    btChannel.sendMessage(
+                            (String) bt.getText());
+                    bt.setEnabled(false);
+                    if (activeButton != 0) {
+                        findViewById(activeButton).setEnabled(true);
                     }
+                    activeButton = id;
+                }
                 }
             });
         };
 
-        Switch sw = (Switch)findViewById(R.id.manual_mode_switch);
+        sw = findViewById(R.id.manual_mode_switch);
+        sw.setEnabled(false);
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -95,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
                 for (Button bt : buttons) {
                     bt.setEnabled(isChecked);
                 }
-                btChannel.sendMessage("Manual: " + isChecked);
+                if (isChecked) {
+                    btChannel.sendMessage("M");
+                }
             }
         });
     }
@@ -133,24 +139,19 @@ public class MainActivity extends AppCompatActivity {
                 ((TextView) findViewById(R.id.bluetooth_state_label)).setText(String.format("Status : connected to server on device %s",
                         serverDevice.getName()));
 
-                findViewById(R.id.connect_bluetooth_button).setEnabled(false);
-
                 btChannel = channel;
-                /*btChannel.registerListener(new RealBluetoothChannel.Listener() {
+                btChannel.registerListener(new RealBluetoothChannel.Listener() {
                     @Override
                     public void onMessageReceived(String receivedMessage) {
-                        ((TextView) findViewById(R.id.chatLabel)).append(String.format("> [RECEIVED from %s] %s\n",
-                                btChannel.getRemoteDeviceName(),
-                                receivedMessage));
+                        handleMessage(receivedMessage);
+                        Log.d(Utils.APP_LOG_TAG, receivedMessage);
                     }
 
                     @Override
                     public void onMessageSent(String sentMessage) {
-                        ((TextView) findViewById(R.id.chatLabel)).append(String.format("> [SENT to %s] %s\n",
-                                btChannel.getRemoteDeviceName(),
-                                sentMessage));
+
                     }
-                });*/
+                });
             }
 
             @Override
@@ -160,4 +161,48 @@ public class MainActivity extends AppCompatActivity {
             }
         }).execute();
     }
+    //message S(1):dist(4):span(3)
+    private void handleMessage(String receivedMessage) {
+        String state = receivedMessage.split(":")[0];
+        String distance = receivedMessage.split(":")[1];
+        String span = receivedMessage.split(":")[2];
+
+        this.handleState(state, distance, span);
+    }
+
+    private void handleState(String state, String distance, String span) {
+        switch (state) {
+            case "0": //Normal
+                ((TextView) findViewById(R.id.current_state_label)).setText(R.string.state_normal);
+                findViewById(R.id.current_state_label).setBackgroundResource(R.color.state_normal);
+                ((TextView) findViewById(R.id.last_detection_title)).setText("");
+                ((TextView) findViewById(R.id.last_detection)).setText("");
+                ((TextView) findViewById(R.id.dam_span_title)).setText("");
+                ((TextView) findViewById(R.id.dam_span)).setText("");
+                this.sw.setChecked(false);
+                this.sw.setEnabled(false);
+                break;
+            case "1": //Pre-Alarm
+                ((TextView) findViewById(R.id.current_state_label)).setText(R.string.state_prealarm);
+                findViewById(R.id.current_state_label).setBackgroundResource(R.color.state_prealarm);
+                ((TextView) findViewById(R.id.last_detection_title)).setText(R.string.last_detection_title);
+                ((TextView) findViewById(R.id.last_detection)).setText(distance);
+                ((TextView) findViewById(R.id.dam_span_title)).setText("");
+                ((TextView) findViewById(R.id.dam_span)).setText("");
+                this.sw.setChecked(false);
+                this.sw.setEnabled(false);
+                break;
+            case "2": //Alarm
+                span += "%";
+                ((TextView) findViewById(R.id.current_state_label)).setText(R.string.state_alarm);
+                findViewById(R.id.current_state_label).setBackgroundResource(R.color.state_alarm);
+                ((TextView) findViewById(R.id.last_detection_title)).setText(R.string.last_detection_title);
+                ((TextView) findViewById(R.id.last_detection)).setText(distance);
+                ((TextView) findViewById(R.id.dam_span_title)).setText(R.string.dam_span_title);
+                ((TextView) findViewById(R.id.dam_span)).setText(span);
+                this.sw.setEnabled(true);
+                break;
+        }
+    }
 }
+

@@ -8,6 +8,7 @@
 #define DELTA_D 4
 
 enum damState{NORMAL, PRE_ALARM, ALARM};
+enum mode{AUTO, MANUAL};
 
 class State {
 public:
@@ -16,11 +17,15 @@ public:
   void setState(damState st);
   void setDistance(float distance);
   int getSpan();
+  void setSpan(int span);
   bool isNewValueAvailable();
   void setNewValueAvailable(bool b);
+  mode getCurrentMode();
+  void setMode(mode m);
   
 private:
   damState currentState;
+  mode currentMode;
   int span;
   int computeSpan(float distance);
   bool valueAvailable;

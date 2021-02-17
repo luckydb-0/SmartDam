@@ -1,7 +1,7 @@
 package com.unibo.seiot.smartdam.dammobileapp;
 
 public class Utils {
-    public static final String APP_LOG_TAG = "BT CLN";
+    public static final String APP_LOG_TAG = "DAM_APP";
 
     public class bluetooth {
         public static final int ENABLE_BT_REQUEST = 1;

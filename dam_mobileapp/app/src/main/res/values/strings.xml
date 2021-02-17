@@ -3,7 +3,7 @@
     <string name="connect_bluetooth">connetti bluetooth</string>
     <string name="connection_state">Stato: non connesso</string>
     <string name="dam_state_title">Stato del sistema</string>
-    <string name="dam_state">NORMALE</string>
+    <string name="dam_state">NESSUNA RILEVAZIONE</string>
     <string name="bt_20">20</string>
     <string name="choose_span_label">Seleziona apertura della diga</string>
     <string name="manual_mode_switch">Entra in modalità manuale</string>
@@ -17,4 +17,7 @@
     <string name="bt_100">100</string>
     <string name="dam_span_title">Apertura diga</string>
     <string name="dam_span">40%</string>
+    <string name="state_normal">NORMALE</string>
+    <string name="state_prealarm">PRE-ALLARME</string>
+    <string name="state_alarm">ALLARME</string>
 </resources>

@@ -2,13 +2,13 @@
 #include "MsgService.h"
 
 String content;
-MsgServiceClass MsgService;
+MsgService msgService;
 
-bool MsgServiceClass::isMsgAvailable(){
+bool MsgService::isMsgAvailable(){
   return msgAvailable;
 }
 
-String MsgServiceClass::receiveMsg(){
+String MsgService::receiveMsg(){
   if (msgAvailable){
     Msg* msg = currentMsg;
     msgAvailable = false;
@@ -20,19 +20,15 @@ String MsgServiceClass::receiveMsg(){
   }
 }
 
-void MsgServiceClass::init(){
+void MsgService::init(){
   Serial.begin(9600);
   content.reserve(256);
   content = "";
   currentMsg = NULL;
-  msgAvailable = false;  
+  msgAvailable = false;
 }
 
-void MsgServiceClass::sendMsg(const String& msg){
-  Serial.println(msg);  
-}
-
-void MsgServiceClass::sendMsg(const Msg& msg){
+void MsgService::sendMsg(Msg msg){
   Serial.println(msg.getContent());  
 }
 
@@ -41,8 +37,8 @@ void serialEvent() {
   while (Serial.available()) {
     char ch = (char) Serial.read();
     if (ch == '\n'){
-      MsgService.currentMsg = new Msg(content);
-      MsgService.msgAvailable = true;      
+      msgService.currentMsg = new Msg(content);
+      msgService.msgAvailable = true;      
     } else {
       content += ch;      
     }

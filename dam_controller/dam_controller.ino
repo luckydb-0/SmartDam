@@ -3,6 +3,7 @@
 #include "ServoMotorTask.h"
 #include "CommTask.h"
 #include "Globals.h"
+#include <MemoryUsage.h>
 
 State* state;
 Task* ledTask;
@@ -18,7 +19,7 @@ void setup() {
 
   sched.init(500);
 
-  commTask = new CommTask();
+  commTask = new CommTask(BT_RX_PIN, BT_TX_PIN);
   commTask->init(1/FREQ_2, state);
   commTask->setActive(true);
   sched.addTask(commTask);
@@ -36,4 +37,5 @@ void setup() {
 
 void loop() {
   sched.schedule();
+  FREERAM_PRINT;
 }

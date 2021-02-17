@@ -68,7 +68,7 @@
         android:id="@+id/current_state_label"
         android:layout_width="358dp"
         android:layout_height="44dp"
-        android:background="#08FF00"
+        android:background="@color/state_normal"
         android:text="@string/dam_state"
         android:textAlignment="center"
         android:textColor="#000000"
@@ -222,7 +222,6 @@
         android:id="@+id/last_detection_title"
         android:layout_width="358dp"
         android:layout_height="wrap_content"
-        android:text="@string/last_detection_title"
         android:textColor="@color/purple_700"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -236,21 +235,19 @@
         android:id="@+id/last_detection"
         android:layout_width="358dp"
         android:layout_height="wrap_content"
-        android:text="@string/last_detection"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.441"
+        app:layout_constraintHorizontal_bias="0.431"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.35" />
+        app:layout_constraintVertical_bias="0.353" />
 
     <TextView
         android:id="@+id/dam_span_title"
         android:layout_width="358dp"
         android:layout_height="wrap_content"
-        android:text="@string/dam_span_title"
         android:textColor="@color/purple_700"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -264,14 +261,13 @@
         android:id="@+id/dam_span"
         android:layout_width="358dp"
         android:layout_height="wrap_content"
-        android:text="@string/dam_span"
         android:textColor="#000000"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.441"
+        app:layout_constraintHorizontal_bias="0.431"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.438" />
+        app:layout_constraintVertical_bias="0.442" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

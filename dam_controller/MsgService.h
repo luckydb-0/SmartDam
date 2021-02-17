@@ -2,41 +2,22 @@
 #define __MSGSERVICE__
 
 #include "Arduino.h"
+#include "SoftwareSerial.h"
+#include "Globals.h"
+#include "Msg.h"
 
-class Msg {
-  String content;
-
-public:
-  Msg(String content){
-    this->content = content;
-  }
-  
-  String getContent(){
-    return content;
-  }
-};
-
-class Pattern {
-public:
-  virtual boolean match(const Msg& m) = 0;  
-};
-
-class MsgServiceClass {
+class MsgService {
     
 public: 
   
   Msg* currentMsg;
   bool msgAvailable;
-
   void init();  
-
   bool isMsgAvailable();
   String receiveMsg();
-  
-  void sendMsg(const Msg& msg);
-  void sendMsg(const String& msg);
+  void sendMsg(Msg msg);
 };
 
-extern MsgServiceClass MsgService;
+extern MsgService msgService;
 
 #endif
