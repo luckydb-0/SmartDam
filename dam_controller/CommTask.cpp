@@ -17,8 +17,8 @@ void CommTask::init(int period, State* state) {
 void CommTask::tick() {
   long now = millis();
 	if(msgService.isMsgAvailable()) {
-    msgService.sendMsg(Msg("Available"));
-    String msg = msgService.receiveMsg();
+    Msg* message = msgService.receiveMsg();
+    String msg = message->getContent();
     char state = msg[0];
     float dist = msg.substring(2,7).toFloat();
 
@@ -29,7 +29,6 @@ void CommTask::tick() {
         this->getState()->setState(PRE_ALARM);
         this->getState()->setDistance(dist);
         msgServiceBT->sendMsg(Msg(state + String(":") + dist + String(":") + this->getState()->getSpan() + String(":")));
-        msgService.sendMsg(Msg(state + String(":") + dist + String(":") + this->getState()->getSpan() + String(":")));
         break;
       case '2':
         this->getState()->setState(ALARM);
@@ -45,6 +44,8 @@ void CommTask::tick() {
 
     this->getState()->setNewValueAvailable(true);
     this->timestamp = millis();
+
+    delete message;
   } else if (now - timestamp >= MAX_TIME*1000) {
     if(this->getState()->getCurrentState() != NORMAL){
       this->getState()->setNewValueAvailable(true);
@@ -52,24 +53,22 @@ void CommTask::tick() {
       this->getState()->setDistance(MAX_DISTANCE);
       this->getState()->setMode(AUTO);
       msgServiceBT->sendMsg(Msg("0:0:0:"));
-      msgService.sendMsg(Msg("0:0:0:"));
     } else {
       this->getState()->setNewValueAvailable(false);
     }
-    msgService.sendMsg(Msg("Not Available 1"));
   } else {
     this->getState()->setNewValueAvailable(false);
-    msgService.sendMsg(Msg("Not Available 2"));
   }
 
   if(msgServiceBT->isMsgAvailable()) {
     Msg* msg = msgServiceBT->receiveMsg();
       if(msg->getContent().equals("M")) {
         this->getState()->setMode(MANUAL);
+      } else if(msg->getContent().equals("A")){
+        this->getState()->setMode(AUTO);
       } else {
         this->getState()->setSpan(msg->getContent().toInt());
-      }
-    msgService.sendMsg(Msg(msg->getContent()));
+      } 
     delete msg;
   }
 }

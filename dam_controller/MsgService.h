@@ -14,7 +14,7 @@ public:
   bool msgAvailable;
   void init();  
   bool isMsgAvailable();
-  String receiveMsg();
+  Msg* receiveMsg();
   void sendMsg(Msg msg);
 };
 
