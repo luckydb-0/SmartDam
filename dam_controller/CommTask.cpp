@@ -29,6 +29,7 @@ void CommTask::tick() {
         this->getState()->setState(PRE_ALARM);
         this->getState()->setDistance(dist);
         msgServiceBT->sendMsg(Msg(state + String(":") + dist + String(":") + this->getState()->getSpan() + String(":")));
+        msgService.sendMsg(Msg(state + String(":") + dist + String(":") + this->getState()->getSpan() + String(":")));
         break;
       case '2':
         this->getState()->setState(ALARM);
@@ -53,6 +54,7 @@ void CommTask::tick() {
       this->getState()->setDistance(MAX_DISTANCE);
       this->getState()->setMode(AUTO);
       msgServiceBT->sendMsg(Msg("0:0:0:"));
+      msgService.sendMsg(Msg("0:0:0:"));
     } else {
       this->getState()->setNewValueAvailable(false);
     }

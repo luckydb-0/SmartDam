@@ -1,21 +1,21 @@
 package dam_service;
 
 public class Data {
-	private int state;
+	private StateEnum state;
 	private double value;
 	private long timestamp;
 	
-	public Data(int state, double value, long time) {
+	public Data(StateEnum state, double value, long time) {
 		this.state = state;
 		this.value = value;
 		this.timestamp = time;
 	}
 
-	public int getState() {
+	public StateEnum getState() {
 		return state;
 	}
 
-	public void setState(int state) {
+	public void setState(StateEnum state) {
 		this.state = state;
 	}
 
@@ -37,6 +37,6 @@ public class Data {
 	
 	@Override
 	public String toString() {
-		return this.state + ":" + Math.floor(this.value * 1000) / 1000  + ":" + this.timestamp;
+		return this.state.getValue() + ":" + Math.floor(this.value * 1000) / 1000  + ":" + this.timestamp;
 	}
 }

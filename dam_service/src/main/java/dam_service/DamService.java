@@ -9,14 +9,9 @@ public class DamService {
 
 	public static void main(String[] args) throws Exception {
 		String port = "COM3";
-		DataHandler dh = new DataHandler(port);
 		Vertx vertx = Vertx.vertx();
-		DataService service = new DataService(8080, dh);
+		DataService service = new DataService(8080, port);
 		vertx.deployVerticle(service);
-		
-		while(true) {
-			dh.read();
-		}
 	}
 
 }

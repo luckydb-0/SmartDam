@@ -18,13 +18,13 @@ public class DataService extends AbstractVerticle {
 
 	private int port;
 	private static final int MAX_SIZE = 10;
-	private LinkedList<DataPoint> values;
-	private DataHandler dh;
+	private LinkedList<Data> values;
+	private MessageHandler mh;
 	
-	public DataService(int port, DataHandler dh) {
+	public DataService(int httpPort, String serialPort) {
 		this.values = new LinkedList<>();
-		this.dh = dh;
-		this.port = port;
+		this.port = httpPort;
+		this.mh = new MessageHandlerImpl(serialPort);
 	}
 
 	@Override
@@ -49,25 +49,26 @@ public class DataService extends AbstractVerticle {
 			sendError(400, response);
 		} else {
 			float value = res.getFloat("value");
-			int state = 	Integer.parseInt(res.getString("state"));
+			StateEnum state = StateEnum.getStateFromValue(Integer.parseInt(res.getString("state")));
 			long time = System.currentTimeMillis();
 			
-			this.values.addFirst(new DataPoint(value, time, state));
+			this.values.addFirst(new Data(state, value, time));
 			if (this.values.size() > MAX_SIZE) {
 				this.values.removeLast();
 			}
 			
-			log("New value: " + value + " from " + state + " on " + new Date(time));
-			this.dh.addAndHandleData(new Data(state, value, time));
+			log("New value: " + value + " State: " + state + " on " + new Date(time));
+			log(this.values.get(0).toString());
+			this.mh.sendMessage(this.values.get(0).toString());
 			response.setStatusCode(200).end();
 		}
 	}
 	
 	private void handleGetData(RoutingContext routingContext) {
 		JsonArray arr = new JsonArray();
-		for (DataPoint p: values) {
+		for (Data p: values) {
 			JsonObject data = new JsonObject();
-			data.put("time", p.getTime());
+			data.put("time", p.getTimestamp());
 			data.put("value", p.getValue());
 			data.put("state", p.getState());
 			arr.add(data);

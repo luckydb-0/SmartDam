@@ -19,16 +19,8 @@ public class DataHandler {
 		this.handleData();
 	}
 	
-	public void handleData() {
+	private void handleData() {
 		Data data = this.data.get(this.data.size() - 1);
 		this.messageHandler.sendMessage(data.toString());
 	}
-	
-	public void read() {
-		Optional<String> msg = this.messageHandler.receiveMessage();
-		if(msg.isPresent()) {
-			System.out.println(msg.get());
-		}
-	}
-	
 }
