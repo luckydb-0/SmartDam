@@ -1,14 +1,25 @@
 package dam_dashboard;
 
 public class Data {
-	private StateEnum state;
+
+	private StateEnum state; 
 	private double value;
-	private long timestamp;
+	private long time;
 	
-	public Data(StateEnum state, double value, long time) {
+	public Data() {
+		
+	}
+	
+	public Data(long time, double value, StateEnum state) {
 		this.state = state;
 		this.value = value;
-		this.timestamp = time;
+		this.time = time;
+	}
+	
+	public Data(long time, double value, String state) {
+		this.state = StateEnum.NORMAL;
+		this.value = value;
+		this.time = time;
 	}
 
 	public StateEnum getState() {
@@ -28,15 +39,15 @@ public class Data {
 	}
 
 	public long getTimestamp() {
-		return timestamp;
+		return time;
 	}
 
 	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
+		this.time = timestamp;
 	}
 	
 	@Override
 	public String toString() {
-		return this.state.getValue() + ":" + Math.floor(this.value * 1000) / 1000  + ":" + this.timestamp;
+		return this.state.getValue() + ":" + Math.floor(this.value * 1000) / 1000  + ":" + this.time;
 	}
 }
