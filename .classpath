@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="dam_mobileapp/app/src/androidTest/java"/>
+	<classpathentry kind="src" path="dam_mobileapp/app/src/main/java"/>
+	<classpathentry kind="src" path="dam_mobileapp/app/src/test/java"/>
+	<classpathentry kind="src" path="dam_mobileapp/bt-lib/src/main/java"/>
+	<classpathentry kind="src" path="dam_service/src/main/java"/>
+	<classpathentry kind="lib" path="dam_mobileapp/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="dam_service/build/libs/dam_service.jar"/>
+	<classpathentry kind="lib" path="dam_service/gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="lib" path="dam_service/lib/jssc-2.9.0.jar"/>
+	<classpathentry kind="lib" path="dam_service/lib/slf4j-simple-1.7.9.jar"/>
+	<classpathentry kind="output" path="dam_service/bin/main"/>
+</classpath>
