@@ -13,7 +13,7 @@ void timerHandler(void){
 void Scheduler::init(float period){
   this->period = period;
   timerFlag = false;
-  timer.attach(period, timerHandler);
+  timer.attach_ms(period, timerHandler);
   nTasks = 0;
 }
 
@@ -31,9 +31,9 @@ void Scheduler::updateTimer(){
   if(State::isStateChanged()){
     timer.detach();
     if(State::getCurrentState() == ALARM){
-      timer.attach(1/FREQ2, timerHandler);
+      timer.attach_ms(1/FREQ2, timerHandler);
     } else {
-      timer.attach(1/FREQ1, timerHandler);
+      timer.attach_ms(1/FREQ1, timerHandler);
     }
   }
 }
