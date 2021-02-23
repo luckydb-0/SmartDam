@@ -21,6 +21,9 @@ void CommTask::tick() {
     String msg = message->getContent();
     char state = msg[0];
     float dist = msg.substring(2,7).toFloat();
+    String timestamp = msg.substring(8);
+
+    String baseMsg = state + String(":") + dist + String(":") + timestamp + String(":");
 
     switch(state){
       case '0':
@@ -28,16 +31,16 @@ void CommTask::tick() {
       case '1':
         this->getState()->setState(PRE_ALARM);
         this->getState()->setDistance(dist);
-        msgServiceBT->sendMsg(Msg(state + String(":") + dist + String(":") + this->getState()->getSpan() + String(":")));
-        msgService.sendMsg(Msg(state + String(":") + dist + String(":") + this->getState()->getSpan() + String(":")));
+        msgServiceBT->sendMsg(Msg(baseMsg + this->getState()->getSpan() + String(":")));
+        msgService.sendMsg(Msg(baseMsg));
         break;
       case '2':
         this->getState()->setState(ALARM);
         if(this->getState()->getCurrentMode() == AUTO) {
           this->getState()->setDistance(dist);
         }
-        msgServiceBT->sendMsg(Msg(state + String(":") + dist + String(":") + this->getState()->getSpan() + String(":")));
-        msgService.sendMsg(Msg(state + String(":") + dist + String(":") + this->getState()->getSpan() + String(":")));
+        msgServiceBT->sendMsg(Msg(baseMsg + this->getState()->getSpan() + String(":")));
+        msgService.sendMsg(Msg(baseMsg + this->getState()->getSpan() + String(":") + (this->getState()->getCurrentMode() == MANUAL ? String("1") : String("0")) + String(":")));
         break;
       default:
         break;

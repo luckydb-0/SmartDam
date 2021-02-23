@@ -10,6 +10,7 @@ import io.vertx.ext.web.handler.BodyHandler;
 
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.Optional;
 
 /*
  * Data Service as a vertx event-loop 
@@ -21,14 +22,15 @@ public class DataService extends AbstractVerticle {
 	private LinkedList<Data> values;
 	private MessageHandler mh;
 	
-	public DataService(int httpPort, String serialPort) {
+	public DataService(int httpPort, MessageHandler mh) {
 		this.values = new LinkedList<>();
+		this.values.add(new Data(0, 0, StateEnum.NORMAL, true, 100));
 		this.port = httpPort;
-		this.mh = new MessageHandlerImpl(serialPort);
+		this.mh = mh;
 	}
 
 	@Override
-	public void start() {		
+	public void start() {
 		Router router = Router.router(vertx);
 		router.route().handler(BodyHandler.create());
 		router.post("/api/data").handler(this::handleAddNewData);
@@ -41,7 +43,7 @@ public class DataService extends AbstractVerticle {
 		log("Service ready.");
 	}
 	
-	private void handleAddNewData(RoutingContext routingContext) {
+	private void handleAddNewData(RoutingContext routingContext) {		
 		HttpServerResponse response = routingContext.response();
 		JsonObject res = routingContext.getBodyAsJson();
 		if (res == null) {
@@ -51,14 +53,10 @@ public class DataService extends AbstractVerticle {
 			StateEnum state = StateEnum.getStateFromValue(Integer.parseInt(res.getString("state")));
 			long time = System.currentTimeMillis();
 			
-			this.values.addFirst(new Data(state, value, time));
-			if (this.values.size() > MAX_SIZE) {
-				this.values.removeLast();
-			}
-			
 			log("New value: " + value + " State: " + state + " on " + new Date(time));
-			log(this.values.get(0).toString());
-			this.mh.sendMessage(this.values.get(0).toString());
+			
+			this.mh.sendMessage(state.value + ":" + Math.floor(value * 1000) / 1000  + ":" + time);
+
 			response.setStatusCode(200).end();
 		}
 	}
@@ -67,9 +65,11 @@ public class DataService extends AbstractVerticle {
 		JsonArray arr = new JsonArray();
 		for (Data p: values) {
 			JsonObject data = new JsonObject();
-			data.put("time", p.getTimestamp());
+			data.put("time", p.getTime());
 			data.put("value", p.getValue());
 			data.put("state", p.getState());
+			data.put("manual", p.isManual());
+			data.put("span", p.getSpan());
 			arr.add(data);
 		}
 		routingContext.response()
@@ -83,5 +83,13 @@ public class DataService extends AbstractVerticle {
 
 	private void log(String msg) {
 		System.out.println("[DATA SERVICE] "+msg);
+	}
+	
+	public void addData(Data data) {
+		this.values.addFirst(data);
+		if (this.values.size() > MAX_SIZE) {
+			this.values.removeLast();
+		}
+		this.values.getFirst();
 	}
 }

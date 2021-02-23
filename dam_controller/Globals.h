@@ -1,8 +1,8 @@
 #ifndef __GLOBALS__
 #define __GLOBALS__
 
-#define FREQ_1 0.25
-#define FREQ_2 0.5
+#define FREQ_1 0.00025
+#define FREQ_2 0.0005
 #define SERVO_PIN 5
 #define LED_PIN 4
 #define BT_RX_PIN 10  // to be connected to TX of the BT module
