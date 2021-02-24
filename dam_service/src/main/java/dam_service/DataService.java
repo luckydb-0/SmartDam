@@ -8,6 +8,7 @@ import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Optional;
@@ -24,7 +25,6 @@ public class DataService extends AbstractVerticle {
 	
 	public DataService(int httpPort, MessageHandler mh) {
 		this.values = new LinkedList<>();
-		this.values.add(new Data(0, 0, StateEnum.NORMAL, true, 100));
 		this.port = httpPort;
 		this.mh = mh;
 	}
@@ -51,11 +51,8 @@ public class DataService extends AbstractVerticle {
 		} else {
 			float value = res.getFloat("value");
 			StateEnum state = StateEnum.getStateFromValue(Integer.parseInt(res.getString("state")));
-			long time = System.currentTimeMillis();
 			
-			log("New value: " + value + " State: " + state + " on " + new Date(time));
-			
-			this.mh.sendMessage(state.value + ":" + Math.floor(value * 1000) / 1000  + ":" + time);
+			this.mh.sendMessage(state.value + ":" + String.format("%.2f", Math.floor(value * 1000) / 1000).replace(",", "."));
 
 			response.setStatusCode(200).end();
 		}

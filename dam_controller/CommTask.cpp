@@ -21,9 +21,8 @@ void CommTask::tick() {
     String msg = message->getContent();
     char state = msg[0];
     float dist = msg.substring(2,7).toFloat();
-    String timestamp = msg.substring(8);
-
-    String baseMsg = state + String(":") + dist + String(":") + timestamp + String(":");
+    
+    String baseMsg = state + String(":") + dist + String(":");
 
     switch(state){
       case '0':
@@ -50,14 +49,14 @@ void CommTask::tick() {
     this->timestamp = millis();
 
     delete message;
-  } else if (now - timestamp >= MAX_TIME*1000) {
+  } else if (now - timestamp >= MAX_TIME) {
     if(this->getState()->getCurrentState() != NORMAL){
       this->getState()->setNewValueAvailable(true);
       this->getState()->setState(NORMAL);
       this->getState()->setDistance(MAX_DISTANCE);
       this->getState()->setMode(AUTO);
-      msgServiceBT->sendMsg(Msg("0:0:0:"));
-      msgService.sendMsg(Msg("0:0:0:"));
+      msgServiceBT->sendMsg(Msg(String("0:") + MAX_DISTANCE + String(":0:")));
+      msgService.sendMsg(Msg("0:1.10:0:"));
     } else {
       this->getState()->setNewValueAvailable(false);
     }
