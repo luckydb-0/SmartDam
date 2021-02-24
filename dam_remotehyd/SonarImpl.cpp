@@ -9,7 +9,7 @@ SonarImpl::SonarImpl(int pinTrig, int pinEcho) {
 }
 
 float SonarImpl::getDistance() {
-	float vs = 331.45 + 0.62*20;
+	float vs = 331.45 + 0.62*this->temp;
   digitalWrite(this->pinTrig, LOW);
   delayMicroseconds(3);
   digitalWrite(this->pinTrig, HIGH);
@@ -20,4 +20,8 @@ float SonarImpl::getDistance() {
   float t = tUS / 1000.0 / 1000.0 / 2;
   float d = t*vs;
   return d;
+}
+
+void SonarImpl::setTemperature(float temp) {
+  this->temp = temp;
 };

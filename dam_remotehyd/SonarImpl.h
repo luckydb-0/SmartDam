@@ -13,6 +13,8 @@ public:
 private:
 	int pinTrig;
 	int pinEcho;
+  float temp;
+  
 };
 
 #endif

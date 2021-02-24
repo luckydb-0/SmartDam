@@ -7,6 +7,7 @@
 #define PIN_TRIG D2
 #define PIN_ECHO D1
 #define PIN_LED D0
+#define PIN_TEMPERATURE A0
 
 Scheduler sched;
 Task* sonarTask;
@@ -17,9 +18,9 @@ Task* commTask;
 void setup() {
   Serial.begin(9600);
 
-  sched.init(1/FREQ2);
+  sched.init(500);
 
-  sonarTask = new SonarTask(PIN_TRIG, PIN_ECHO);
+  sonarTask = new SonarTask(PIN_TRIG, PIN_ECHO, PIN_TEMPERATURE);
   sonarTask->init(1/FREQ2);
   sonarTask->setActive(true);
   sched.addTask(sonarTask);
