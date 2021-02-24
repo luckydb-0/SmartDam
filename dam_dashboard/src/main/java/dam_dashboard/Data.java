@@ -5,25 +5,23 @@ public class Data {
 	private StateEnum state; 
 	private double value;
 	private long time;
+	private boolean manual;
+	private int span;
 	
 	public Data() {
 		
 	}
 	
-	public Data(long time, double value, StateEnum state) {
-		this.state = state;
-		this.value = value;
-		this.time = time;
-	}
-	
-	public Data(long time, double value, String state) {
-		this.state = StateEnum.NORMAL;
-		this.value = value;
-		this.time = time;
+	public Data(long time, double value, StateEnum state, boolean manual, int span) {
+		this.setState(state);
+		this.setValue(value);
+		this.setTime(time);
+		this.setManual(manual);
+		this.setSpan(span);
 	}
 
 	public StateEnum getState() {
-		return state;
+		return this.state;
 	}
 
 	public void setState(StateEnum state) {
@@ -31,23 +29,35 @@ public class Data {
 	}
 
 	public double getValue() {
-		return value;
+		return this.value;
 	}
 
 	public void setValue(double value) {
 		this.value = value;
 	}
 
-	public long getTimestamp() {
-		return time;
+	public long getTime() {
+		return this.time;
 	}
 
-	public void setTimestamp(long timestamp) {
-		this.time = timestamp;
+	public void setTime(long time) {
+		this.time = time;
 	}
-	
-	@Override
-	public String toString() {
-		return this.state.getValue() + ":" + Math.floor(this.value * 1000) / 1000  + ":" + this.time;
+
+	public boolean isManual() {
+		return this.manual;
 	}
+
+	public void setManual(boolean manual) {
+		this.manual = manual;
+	}
+
+	public int getSpan() {
+		return this.span;
+	}
+
+	public void setSpan(int span) {
+		this.span = span;
+	}
+
 }
