@@ -40,8 +40,6 @@ int Comm::sendData(float value, damState st){
     ", \"state\": \"" + String(st) +"\" }";
    int retCode = http.POST(msg);   
    http.end();
-   
-   // String payload = http.getString();  
-   // Serial.println(payload);      
+ 
    return retCode;
 };

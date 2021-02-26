@@ -26,7 +26,7 @@ void setup() {
   sched.addTask(sonarTask);
   
   ledTask = new LedTask(PIN_LED);
-  ledTask->init(1/FREQ2);
+  ledTask->init(500);
   ledTask->setActive(true);
   sched.addTask(ledTask);
   

@@ -30,7 +30,4 @@ void StateTask::tick(){
   if(curr != this->lastState) {
     this->lastState = curr;
   }
-  
-  Serial.println(String("Distance: ") + sonarRead);
-  Serial.println(String("Stato: ") + (curr == NORMAL ? "NORMAL" : (curr == PRE_ALARM ? "PRE ALARM" : "ALARM")));
 };

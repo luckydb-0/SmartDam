@@ -18,7 +18,6 @@ void SonarTask::tick(){
   this->sonar->setTemperature(this->tempSensor->getTemperature());
   this->lastRead = this->sonar->getDistance();
   State::setValue(this->lastRead);
-  Serial.println(String("SONAR Stato: ") + (this->st->getCurrentState() == NORMAL ? "NORMAL" : (this->st->getCurrentState() == PRE_ALARM ? "PRE ALARM" : "ALARM")));
 }
 
 float SonarTask::getLastRead(){

@@ -8,6 +8,7 @@ volatile bool timerFlag;
 
 void timerHandler(void){
   timerFlag = true;
+  Serial.println(String("Time: ") + millis());
 }
 
 void Scheduler::init(float period){
@@ -31,9 +32,11 @@ void Scheduler::updateTimer(){
   if(State::isStateChanged()){
     timer.detach();
     if(State::getCurrentState() == ALARM){
-      timer.attach_ms(1/FREQ2, timerHandler);
+      this->period = 1.0/FREQ2;
+      timer.attach_ms(this->period, timerHandler);
     } else {
-      timer.attach_ms(1/FREQ1, timerHandler);
+      this->period = 1.0/FREQ1;
+      timer.attach_ms(this->period, timerHandler);
     }
   }
 }
