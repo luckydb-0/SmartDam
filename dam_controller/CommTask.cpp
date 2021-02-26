@@ -22,7 +22,7 @@ void CommTask::tick() {
     char state = msg[0];
     float dist = msg.substring(2,7).toFloat();
     
-    String baseMsg = state + String(":") + dist + String(":");
+    String baseMsg = state + String(":") + (HEIGHT - dist) + String(":");
 
     switch(state){
       case '0':
@@ -56,7 +56,7 @@ void CommTask::tick() {
       this->getState()->setDistance(MAX_DISTANCE);
       this->getState()->setMode(AUTO);
       msgServiceBT->sendMsg(Msg(String("0:") + MAX_DISTANCE + String(":0:")));
-      msgService.sendMsg(Msg("0:1.10:0:"));
+      msgService.sendMsg(Msg(String("0:") + (HEIGHT - 1.10) + String(":0:")));
     } else {
       this->getState()->setNewValueAvailable(false);
     }

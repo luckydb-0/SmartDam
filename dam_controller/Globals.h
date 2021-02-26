@@ -7,5 +7,6 @@
 #define LED_PIN 4
 #define BT_RX_PIN 10  // to be connected to TX of the BT module
 #define BT_TX_PIN 11  // to be connected to RX of the BT module
+#define HEIGHT 5.0
 
 #endif

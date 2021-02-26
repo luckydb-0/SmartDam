@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
     private void handleMessage(String receivedMessage) {
         String state = receivedMessage.split(":")[0];
         String distance = receivedMessage.split(":")[1];
-        String span = receivedMessage.split(":")[3];
+        String span = receivedMessage.split(":")[2];
 
         this.handleState(state, distance, span);
     }
