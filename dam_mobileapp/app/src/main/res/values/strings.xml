@@ -3,7 +3,6 @@
     <string name="connect_bluetooth">connetti bluetooth</string>
     <string name="connection_state">Stato: non connesso</string>
     <string name="dam_state_title">Stato del sistema</string>
-    <string name="dam_state">NESSUNA RILEVAZIONE</string>
     <string name="bt_20">20</string>
     <string name="choose_span_label">Seleziona apertura della diga</string>
     <string name="manual_mode_switch">Entra in modalità manuale</string>

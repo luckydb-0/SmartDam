@@ -4,8 +4,9 @@ import java.util.Optional;
 
 public class Receiver extends Thread {
 	
-	MessageHandler mh;
+	private MessageHandler mh;
 	DataService service;
+	
 	
 	public Receiver(MessageHandler mh, DataService service) {
 		this.mh = mh;
@@ -25,8 +26,7 @@ public class Receiver extends Thread {
 				boolean isManual = false;
 				if(state.equals(StateEnum.ALARM)) {
 					span = Integer.parseInt(msg.split(":")[2]);
-					isManual = msg.split(":")[3] == "1" ? true : false;
-							
+					isManual = msg.split(":")[3].equals("1") ? true : false;							
 				}
 
 				

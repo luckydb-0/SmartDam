@@ -69,7 +69,7 @@
         android:layout_width="358dp"
         android:layout_height="44dp"
         android:background="@color/state_normal"
-        android:text="@string/dam_state"
+        android:text="@string/state_normal"
         android:textAlignment="center"
         android:textColor="#000000"
         android:textSize="30sp"
