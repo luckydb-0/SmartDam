@@ -59,5 +59,9 @@ public class Data {
 	public void setSpan(int span) {
 		this.span = span;
 	}
+	
+	public String toString() {
+		return "Manual: " + this.manual;
+	}
 
 }

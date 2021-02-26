@@ -17,7 +17,13 @@ import javax.swing.border.EmptyBorder;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.DateAxis;
+import org.jfree.chart.axis.DateTickUnit;
+import org.jfree.chart.axis.DateTickUnitType;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.NumberTickUnit;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -41,31 +47,38 @@ public class Client extends JFrame {
 	private String host;
 	private int port;
 	
-	public Client(String title) {
+	public Client(String title, String host) {
 		super(title);
 		this.dataset = new XYSeriesCollection();
 		this.mainPanel = new JPanel(new BorderLayout());
 	    this.labelPanel = new JPanel();
-	    this.stateLabel = new JLabel("Stato: NORMALE");
+	    this.stateLabel = new JLabel("Stato: NORMAL");
 	    this.manualLabel = new JLabel("");
 	    this.spanLabel = new JLabel("");
 	    this.titleLabel = new JLabel(title, SwingConstants.CENTER);
-	    this.initClient();
+	    this.initClient(host);
 		
 		JFreeChart chart = ChartFactory.createXYLineChart(
 		        "",
 		        "Tempo",
-		        "Distanza rilevata",
+		        "Livello dell'acqua",
 		        this.dataset,
 		        PlotOrientation.VERTICAL,
 		        true, true, false);
-
+		
+		XYPlot xyPlot = (XYPlot) chart.getPlot();
+	    NumberAxis domain = (NumberAxis) xyPlot.getRangeAxis();
+	    domain.setRange(3.00, 5.00);
+	    domain.setTickUnit(new NumberTickUnit(0.1));
+	    xyPlot.setDomainAxis(new DateAxis());
+		
 	    this.chartPanel = new ChartPanel(chart);
 	    this.initUI();
 	    this.chartPanel.setVisible(false);
 
+	    this.mainPanel.add(this.chartPanel);
 	    this.add(this.mainPanel);
-	    this.setSize(600, 400);
+	    this.setSize(1000, 1000);
 	    this.pack();
 	    this.setVisible(true);
 	}
@@ -90,10 +103,12 @@ public class Client extends JFrame {
 	    this.mainPanel.add(titleLabel, BorderLayout.PAGE_START);
 	    this.mainPanel.add(labelPanel, BorderLayout.LINE_START);
 	    this.mainPanel.add(chartPanel, BorderLayout.LINE_END);
+	    
+	    this.pack();
 	}
 	
-	private void initClient() {
-		this.host = "fad649a9492a.ngrok.io";
+	private void initClient(String host) {
+		this.host = host;
 		this.port = 80;
 
 		Vertx vertx = Vertx.vertx();
@@ -122,6 +137,7 @@ public class Client extends JFrame {
 	    	this.manualLabel.setVisible(true);
 	    } else {
 	    	this.manualLabel.setVisible(false);
+	    	//System.out.println(data.toString());
 	    }
 	    
 	    switch(data.getState()) {
@@ -141,27 +157,31 @@ public class Client extends JFrame {
 	    	default:
 	    		break;
 	    }
+	    
+	    this.pack();
 	}
 	
-	private void handleData(JsonArray data) {	    
-	    XYSeries series = new XYSeries("");
-	    Data last;
+	private void handleData(JsonArray data) {
+		if(data.size() > 0) {
+		    XYSeries series = new XYSeries("");
+		    Data last;
+		    
+			for(Object obj: data) {
+				Data tmp = Json.decodeValue(obj.toString(), Data.class);
+				series.add(tmp.getTime(), tmp.getValue());
+			}
+			
+		    //Add series to dataset
+			this.dataset.removeAllSeries();
+		    this.dataset.addSeries(series);
 	    
-		for(Object obj: data) {
-			Data tmp = Json.decodeValue(obj.toString(), Data.class);
-			series.add(tmp.getTime(), tmp.getValue());
-		}
-		
-	    //Add series to dataset
-		this.dataset.removeAllSeries();
-	    this.dataset.addSeries(series);
-	    
-	    last = Json.decodeValue(data.getJsonObject(0).toString(), Data.class);
-	    this.updateUI(last);
+	    	last = Json.decodeValue(data.getJsonObject(0).toString(), Data.class);
+	    	this.updateUI(last);
+	    }
 	}
 	
 	public static void main(String[] args) {
-		new Client("Dam Dashboard");
+		new Client("Dam Dashboard", "fe5668dad5d3.ngrok.io");
 	}
 
 }
