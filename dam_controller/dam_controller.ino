@@ -3,7 +3,6 @@
 #include "ServoMotorTask.h"
 #include "CommTask.h"
 #include "Globals.h"
-#include <MemoryUsage.h>
 
 State* state;
 Task* ledTask;
