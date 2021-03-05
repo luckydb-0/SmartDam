@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onConnectionActive(final BluetoothChannel channel) {
 
-                ((TextView) findViewById(R.id.bluetooth_state_label)).setText(String.format("Status : connected to server on device %s",
+                ((TextView) findViewById(R.id.bluetooth_state_label)).setText(String.format("Connesso a %s",
                         serverDevice.getName()));
 
                 btChannel = channel;
