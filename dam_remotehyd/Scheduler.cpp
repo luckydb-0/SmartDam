@@ -8,7 +8,6 @@ volatile bool timerFlag;
 
 void timerHandler(void){
   timerFlag = true;
-  Serial.println(String("Time: ") + millis());
 }
 
 void Scheduler::init(float period){

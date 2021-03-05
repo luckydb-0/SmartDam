@@ -180,7 +180,7 @@ public class Client extends JFrame {
 	}
 	
 	public static void main(String[] args) {
-		new Client("Dam Dashboard", "fe5668dad5d3.ngrok.io");
+		new Client("Dam Dashboard", "8176154f6526.ngrok.io");
 	}
 
 }
