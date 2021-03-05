@@ -24,5 +24,4 @@ void CommTask::tick(){
       this->comm->sendNewData(State::getValue(), State::getCurrentState());
       break;
   }
-  Serial.println("Comm task");
 };

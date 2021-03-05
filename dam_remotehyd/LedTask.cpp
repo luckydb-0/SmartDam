@@ -32,7 +32,4 @@ void LedTask::tick() {
     default:
       break;
 	}
-
- Serial.println("Led Task");
-
 };

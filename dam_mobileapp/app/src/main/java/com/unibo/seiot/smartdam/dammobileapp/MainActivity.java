@@ -132,9 +132,7 @@ public class MainActivity extends AppCompatActivity {
     private void connectToBTServer() throws BluetoothDeviceNotFound {
         final BluetoothDevice serverDevice = BluetoothUtils.getPairedDeviceByName(Utils.bluetooth.BT_DEVICE_ACTING_AS_SERVER_NAME);
 
-        // !!! UTILIZZARE IL CORRETTO VALORE DI UUID
         final UUID uuid = BluetoothUtils.getEmbeddedDeviceDefaultUuid();
-        //final UUID uuid = BluetoothUtils.generateUuidFromString(C.bluetooth.BT_SERVER_UUID);
 
         new ConnectToBluetoothServerTask(serverDevice, uuid, new ConnectionTask.EventListener() {
             @Override
@@ -165,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).execute();
     }
-    //message S(1):dist(4):span(3)
+
     private void handleMessage(String receivedMessage) {
         String state = receivedMessage.split(":")[0];
         String distance = receivedMessage.split(":")[1];

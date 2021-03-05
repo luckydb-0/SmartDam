@@ -7,7 +7,6 @@ public class Receiver extends Thread {
 	private MessageHandler mh;
 	DataService service;
 	
-	
 	public Receiver(MessageHandler mh, DataService service) {
 		this.mh = mh;
 		this.service = service;

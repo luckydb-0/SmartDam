@@ -137,7 +137,6 @@ public class Client extends JFrame {
 	    	this.manualLabel.setVisible(true);
 	    } else {
 	    	this.manualLabel.setVisible(false);
-	    	//System.out.println(data.toString());
 	    }
 	    
 	    switch(data.getState()) {
