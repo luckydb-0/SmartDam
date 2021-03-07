@@ -1,11 +1,11 @@
 package dam_service;
 
-import java.util.Optional;
-
 import io.vertx.core.Vertx;
 
 /**
- * Application's entry point.
+ * Authors:
+ * De Bonis Gianluca
+ * De Crescenzo Andrea
  */
 public class DamService {
 

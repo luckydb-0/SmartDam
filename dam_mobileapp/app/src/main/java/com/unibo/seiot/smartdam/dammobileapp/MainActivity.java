@@ -31,6 +31,11 @@ import unibo.btlib.ConnectionTask;
 import unibo.btlib.RealBluetoothChannel;
 import unibo.btlib.exceptions.BluetoothDeviceNotFound;
 
+/**
+ * Authors:
+ * De Bonis Gianluca
+ * De Crescenzo Andrea
+ */
 public class MainActivity extends AppCompatActivity {
 
     private BluetoothChannel btChannel;

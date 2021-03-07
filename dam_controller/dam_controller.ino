@@ -1,3 +1,9 @@
+/**
+ * Authors:
+ * De Bonis Gianluca
+ * De Crescenzo Andrea
+ */
+
 #include "Scheduler.h"
 #include "LedTask.h"
 #include "ServoMotorTask.h"
